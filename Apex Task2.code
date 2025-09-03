@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intermediate HTML, CSS, and JavaScript</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f6fa;
+      color: #333;
+    }
+    header {
+      background: #2a7cff;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+    }
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+    }
+    section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      color: #2a7cff;
+    }
+    /* Contact Form */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input, button {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #2a7cff;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover {
+      background: #1a5ed9;
+    }
+    /* To-Do List */
+    #todoList li {
+      background: #eaf0ff;
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+    /* Responsive Layout */
+    @media (max-width: 768px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Intermediate HTML, CSS, and JavaScript</h1>
+  </header>
+  <main>
+    <!-- Contact Form -->
+    <section>
+      <h2>Contact Form</h2>
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Enter your name" required>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <button type="submit">Submit</button>
+      </form>
+      <p id="formMsg"></p>
+    </section>
+
+    <!-- Dynamic To-Do List -->
+    <section>
+      <h2>Dynamic To-Do List</h2>
+      <input type="text" id="taskInput" placeholder="Enter a new task">
+      <button onclick="addTask()">Add Task</button>
+      <ul id="todoList"></ul>
+    </section>
+  </main>
+
+  <script>
+    // Form Validation
+    document.getElementById("contactForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      let name = document.getElementById("name").value.trim();
+      let email = document.getElementById("email").value.trim();
+      let msg = document.getElementById("formMsg");
+
+      if (name === "" || email === "") {
+        msg.textContent = "All fields are required!";
+        msg.style.color = "red";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        msg.textContent = "Invalid email format!";
+        msg.style.color = "red";
+      } else {
+        msg.textContent = "Form submitted successfully!";
+        msg.style.color = "green";
+      }
+    });
+
+    // Dynamic To-Do List
+    function addTask() {
+      let taskInput = document.getElementById("taskInput");
+      let taskValue = taskInput.value.trim();
+      if (taskValue === "") return;
+
+      let li = document.createElement("li");
+      li.textContent = taskValue;
+
+      let delBtn = document.createElement("button");
+      delBtn.textContent = "❌";
+      delBtn.style.marginLeft = "10px";
+      delBtn.onclick = function () {
+        li.remove();
+      };
+
+      li.appendChild(delBtn);
+      document.getElementById("todoList").appendChild(li);
+      taskInput.value = "";
+    }
+  </script>
+</body>
+</html>
